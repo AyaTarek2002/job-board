@@ -160,16 +160,17 @@
     });
   </script>
 
-  <style scoped>
-  .table {
+<style scoped>
+.table {
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  background-color: #fdfdfd;
 }
 
 thead th {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #e2e8f0; /* رمادي فاتح للهيدر */
+  color: #2d3748; /* رمادي غامق للنص */
   text-align: center;
   vertical-align: middle;
 }
@@ -177,16 +178,48 @@ thead th {
 tbody td {
   vertical-align: middle;
   text-align: center;
+  color: #4a5568; /* رمادي معتدل */
+}
+
+tbody td strong {
+  color: #2d3748; /* أغمق شويه للعنوان */
+}
+
+tbody td small {
+  color: #718096; /* رمادي فاتح للتفاصيل */
+  font-weight: 500;
 }
 
 .badge {
-  font-size: 0.9rem;
-  padding: 0.5em 0.75em;
-  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  padding: 0.4em 0.7em;
+  border-radius: 1rem;
+  font-weight: 500;
 }
 
-button.btn {
-  min-width: 80px;
+.bg-success {
+  background-color: #38a169 !important; /* أخضر هادي */
+  color: white;
+}
+
+.bg-danger {
+  background-color: #e53e3e !important; /* أحمر أنعم */
+  color: white;
+}
+
+.bg-warning {
+  background-color: #d69e2e !important; /* أصفر ذهبي */
+  color: white;
+}
+
+.bg-primary {
+  background-color: #4299e1 !important; /* أزرق ناعم */
+  color: white;
+}
+
+.bg-secondary {
+  background-color: #cbd5e0 !important; /* رمادي أزرق */
+  color: #2d3748;
 }
 
 .table td, .table th {
@@ -194,21 +227,36 @@ button.btn {
 }
 
 .table-hover tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: #f0f4f8; /* Hover ناعم */
+}
+
+button.btn {
+  min-width: 90px;
+  font-weight: 500;
+}
+
+.btn-outline-primary {
+  border-color: #4299e1;
+  color: #4299e1;
+}
+
+.btn-outline-primary:hover {
+  background-color: #4299e1;
+  color: white;
 }
 
 .modal-title {
   font-weight: bold;
 } 
 
-  @media (max-width: 768px) {
-    .table-responsive {
-      font-size: 0.875rem;
-    }
-    
-    .btn-sm {
-      padding: 0.2rem 0.4rem;
-      font-size: 0.75rem;
-    }
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.875rem;
   }
-  </style>
+
+  .btn-sm {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
+  }
+}
+</style>

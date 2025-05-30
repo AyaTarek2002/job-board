@@ -455,4 +455,68 @@ const submitJob = () => {
 .card {
   border-radius: 12px;
 }
+.card {
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease-in-out;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+h2 {
+  font-weight: 600;
+  color: #047fec;
+}
+
+label {
+  font-weight: 500;
+  color: #333;
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+input.form-control:focus,
+select.form-select:focus,
+textarea.form-control:focus {
+  border-color: #047fec;
+  box-shadow: 0 0 0 0.2rem rgba(4, 127, 236, 0.25);
+}
+
+.text-danger {
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.text-success {
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+button[type="submit"] {
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  padding: 10px 24px;
+  background-color: #047fec;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #036ccd;
+}
+
 </style>

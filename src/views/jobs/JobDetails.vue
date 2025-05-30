@@ -323,6 +323,12 @@ const validateForm = () => {
     isValid = false
   }
 
+  // Validate cover letter (مطلوب)
+  if (!application.value.coverLetter.trim()) {
+    errors.value.coverLetter = 'Cover letter is required.'
+    isValid = false
+  }
+
   return isValid
 }
 
@@ -333,7 +339,7 @@ const handleApplyClick = async () => {
   }
 
   const token = localStorage.getItem('token')
-  
+
   if (!token) {
     router.push('/login')
   } else {
@@ -342,7 +348,7 @@ const handleApplyClick = async () => {
     application.value.name = userData.name || ''
     application.value.email = userData.email || ''
     application.value.phone = userData.phone || ''
-    
+
     await nextTick()
     if (applicationForm.value) {
       applicationForm.value.classList.remove('was-validated')
@@ -360,6 +366,16 @@ const closeForm = () => {
     resume: '',
     coverLetter: ''
   }
+  application.value = {
+    name: '',
+    email: '',
+    phone: '',
+    resume: null,
+    coverLetter: ''
+  }
+  // تنظيف قيمة ملف الرفع input عند إغلاق الفورم
+  const resumeInput = document.getElementById('resume')
+  if (resumeInput) resumeInput.value = ''
 }
 
 const submitApplication = async () => {
@@ -374,10 +390,10 @@ const submitApplication = async () => {
 
   isSubmitting.value = true
   submitMessage.value = ''
-  
+
   const token = localStorage.getItem('token')
   const jobId = route.params.id
-  
+
   try {
     const formData = new FormData()
     formData.append('resume_snapshot', application.value.resume)
@@ -385,21 +401,26 @@ const submitApplication = async () => {
     formData.append('contact_email', application.value.email)
     formData.append('contact_phone', application.value.phone)
     formData.append('name', application.value.name)
-    
-    const response = await axios.post(
-      `http://localhost:8000/api/jobs/${jobId}/apply`, 
-      formData, 
+
+    // Debug: طباعة محتويات formData
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ':', pair[1])
+    }
+
+    await axios.post(
+      `http://localhost:8000/api/jobs/${jobId}/apply`,
+      formData,
       {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       }
     )
-    
+
     submitSuccess.value = true
     submitMessage.value = 'Application submitted successfully!'
-    
+
     setTimeout(() => {
       application.value = {
         name: '',
@@ -413,10 +434,15 @@ const submitApplication = async () => {
       if (applicationForm.value) {
         applicationForm.value.classList.remove('was-validated')
       }
+      // تنظيف قيمة ملف الرفع بعد الإرسال
+      const resumeInput = document.getElementById('resume')
+      if (resumeInput) resumeInput.value = ''
     }, 3000)
   } catch (error) {
+    // طباعة تفاصيل الخطأ كاملة
     console.error('Full error response:', error.response)
-    
+    console.error('Error data:', error.response?.data)
+
     if (error.response?.status === 422) {
       // Handle validation errors from server
       const serverErrors = error.response.data.errors
@@ -429,19 +455,25 @@ const submitApplication = async () => {
       }
       submitMessage.value = 'Please check your inputs and try again.'
     } else if (error.response?.status === 409) {
-      submitMessage.value = error.response.data.message || 
+      submitMessage.value =
+        error.response.data.message ||
         'You may have already applied for this position or the job is no longer accepting applications.'
     } else {
       submitMessage.value = 'Failed to submit application. Please try again.'
     }
-    
+
     submitSuccess.value = false
   } finally {
     isSubmitting.value = false
   }
 }
 
-onMounted(fetchJob)
+
+// تحميل بيانات الوظيفة عند تهيئة المكون
+onMounted(() => {
+  fetchJob()
+})
+
 </script>
 
 <style scoped>
