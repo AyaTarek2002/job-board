@@ -23,6 +23,7 @@
     amount: {
       type: Number,
       required: true
+      
     }
   })
   
